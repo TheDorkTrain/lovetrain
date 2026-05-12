@@ -1,0 +1,1 @@
+This Game Folder is the remains of the Shield King Game.
