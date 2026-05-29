@@ -1,66 +1,71 @@
-dayTimer = 5
-phase = "Day"
-day = 1
+local dayTimer = {}
+timer = 0
+week = 1
 
-dayChangeTimer = 0
+function clock(dt)
+pace = timer*75
+timer = timer + dt
 
-function DayTimerCount(dt)
-if phase == "Day" then
-   if value1 == altar1.goal and value2 == altar2.goal and value3 == altar3.goal then
- if dayTimer <= 175 then
-    dayTimer = dayTimer + dt*3
- end
-else
-   if dayTimer <= 175 then
-      dayTimer = dayTimer + dt
-   end
+
+if timer >= 3 and day == "NewWeek"  then
+   timer = 1
+   day = "Weekday"
 end
 
- if dayTimer >= 175 then
-    dayTimer = 5
-    phase = "Night"
-    location = "dayChange"
+if timer >= 9 and day == "Weekday" then
+   timer = 1
+   day = "WeekEnd"
+end
+
+if timer >= 30 and day == "Sunday" then
+       timer = 1
+       day = "WeekReview"
+end
+
+ if timer >= 120 and day == "Saturday" then
+       timer = 1
+        day = "ReadyforMarket"
    
  end
 end
 
-if phase == "Night" then
-    if dayTimer <= 175 then
-        dayTimer = dayTimer + dt*2
-     end
-     if dayTimer >= 175 then
-        dayTimer = 5
-        phase = "Day"
-        day = day + 1
-        location = "dayChange"
-        dailyReset()
-     end
-    end
+function dayTimer:draw()
+love.graphics.setColor(0.918, 0.94, 0.647)
+if timer >= 60 then 
+    love.graphics.setColor(0.918, 0.75, 0.647)
+end
+if timer >= 90 then 
+    love.graphics.setColor(0.969, 0.4, 0.647)
+end 
+love.graphics.circle("fill", 0, 0, 190, 190)
+
+      love.graphics.setColor(0.9, 0.9, 0.6) 
+if timer >= 60 then 
+    love.graphics.setColor(0.9, 0.7, 0.6)
+end
+if timer >= 90 then 
+    love.graphics.setColor(0.9, 0.4, 0.6)
+end 
+love.graphics.circle("fill", 0, 0, 180, 180)
+love.graphics.setColor(0, 0, 0)
+love.graphics.setFont(smallF)
+love.graphics.print( "Week " , 20, 10)
+love.graphics.print( week , 125, 10)
+love.graphics.print( day , 20, 50)
+love.graphics.print("Funds:" , 20, 90)
+love.graphics.print("$" ..funds, 20, 110)
+love.graphics.line(5,5, 5, 175)
+love.graphics.setColor(1, .984, 0)
+if day == "Saturday" then
+love.graphics.circle("fill", 5, timer*1.45, 10, 10)
+end
+if day == "Sunday" then
+love.graphics.circle("fill", 5, timer*5.8, 10, 10)
+end
+love.graphics.setColor(1, 1, 1)
 
 end
 
-
-function dayChange(dt)
-   if dayChangeTimer <= 3 then
-      dayChangeTimer = dayChangeTimer + dt
-   end
-   if dayChangeTimer >= 3 then
-      if phase == "Night" and value1 == altar1.goal and value2 == altar2.goal and value3 == altar3.goal then
-      phase = "Day"
-      day = day + 1
-      location = "game"
-      dailyReset()
-      dayChangeTimer = 0
-      elseif phase == "Day" then 
-      location = "game"
-      dayChangeTimer = 0
-        dailyReset()
-      else
-         location = "game"
-         dayChangeTimer = 0
-         crabAttack = true
-      end
-   end
-end
+return dayTimer
    
 

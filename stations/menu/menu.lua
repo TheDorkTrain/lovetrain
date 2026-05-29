@@ -2,17 +2,14 @@ local Menu ={}
 
 
 function Menu:draw()
-    love.graphics.draw(titleScreen, 0, 0, 0, .29, .29)
+    love.graphics.draw(titleScreen, 325, 0, 0, 1, 1.75)
     love.graphics.setFont(mediumF)
-    love.graphics.setColor(1, .5, 0)
-    love.graphics.print("Arty's Bake Shop", 10, 400)
+   love.graphics.setColor(.894, .627, .941)
+    love.graphics.print("Dough", 50, 250)
+      love.graphics.print("for Dreams", 50, 300)
     love.graphics.setColor(1, 1, 1)
-start:draw()
-close:draw()
--- love.graphics.rectangle("line", 100, 150, 100, 50)
--- love.graphics.print("Start Game", 125, 175 )
--- love.graphics.rectangle("line", 250, 150, 100, 50)
--- love.graphics.print("Close Game", 275, 175 )
+    start:draw( 50, 375, 250, 50)
+    close:draw( 50, 450, 250, 50)
 end
 
 return Menu

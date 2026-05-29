@@ -1,4 +1,6 @@
 function love.conf(t)
-    t.window.title = "Every Night the Crab Attacks"
-    t.window.icon = "assets/images/character/hero.png"
+    t.window.width = 800
+    t.window.height = 600
+    t.window.title = "Dough for Dreams"
+    t.window.icon = "assets/images/props/cookSugar.png"
 end

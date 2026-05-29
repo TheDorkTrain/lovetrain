@@ -1,4 +1,4 @@
-require ("tickets")
+require ("tickets/allAboard")
  location = "menu"
 
 function love.load()
@@ -9,6 +9,7 @@ function love.load()
 end
 
 function love.update(dt)
+    Debug:update(dt)
     Game:update(dt)
   soundtrack()
 end
@@ -16,27 +17,27 @@ end
 
 function love.draw()
 
---     if location == "gameover" then
---         love.graphics.setFont(largeF)
---         love.graphics.print("Game Over", 100, 300, 0, 2, 2)
---         love.graphics.setFont(mediumF)
---         press:draw()
---     end
 
---     if location == "ending" then
---         -- Draw scrolling ocean background
---        creditsdraw()
---     end
+    if location == "ending" then
+        -- Draw Bake Shop Ending
 
-    if location == "menu" then
+        love.graphics.setFont(largeF)
+                love.graphics.setColor(.894, .627, .941)
+       love.graphics.print("Thanks for Playing!", 175, 405)
+       close:draw( 250, 500, 275, 50)
+    end
+
+if location == "menu" then
 	Menu:draw()
 end
 if location == "intro" then
-    Intro:draw()
+  Intro:draw()
 end
 
---  if location == "game" or "dayChange" then
--- Game:draw()
--- end
+if location == "game" then
+  Game:draw()
+end
+
+Debug:draw()
 
 end

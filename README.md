@@ -1,12 +1,12 @@
 # lovetrain
 framework within love2d that I have configured for my own personal use
 
-Main.lua
-    Where everything runs
+Main.lua / conf.lua
+    Where everything runs and where everything is configured
 
-Tickets.lua
-    The Ticket System for the framework makes sure all the passengers are on the train.
-    Where all the files are loaded.
+Tickets Folder
+    The Ticket System for the framework makes sure all the required pieces are on the train.
+    Where all the files/functions are loaded.
 
 Stations Folder
     This contains the different stations our game will pull into, The Main Menu, the Game. It can allow for multiple mechanics/minigames.
