@@ -10,7 +10,9 @@ function Button:mousepressed(x, y, button)
         if x > self.x and x < self.x + self.width and 
            y > self.y and y < self.y + self.height then 
             print("Button " .. self.name .. " was clicked!") 
+            if self.name == 'next' or self.name == "prev" then
             self:clear()
+            end
             return true 
         end
     end
@@ -167,7 +169,23 @@ end
                 if del4Butt:mousepressed(x, y, button) then
                     product4 = {"", 0}
                 end
-        
+    if cookingFinished then
+    local currentPrice = tonumber(inputAmount) or cookingPrice
+    if priceUpButt:mousepressed(x, y, button) then
+        local newPrice = currentPrice + 1
+        if newPrice <= cookingPrice + 10 then
+            inputAmount = tostring(newPrice)
+            finalNumber = newPrice
+        end
+    end
+    if priceDownButt:mousepressed(x, y, button) then
+        local newPrice = currentPrice - 1
+        if newPrice >= cookingPrice - 10 then
+            inputAmount = tostring(newPrice)
+            finalNumber = newPrice
+        end
+    end
+end
     end
 
     if day == "ReadyforMarket" then

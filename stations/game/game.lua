@@ -111,6 +111,7 @@ function Game:draw()
             love.graphics.print(funds, 400, 200)
             love.graphics.print("Left To Go:", 250, 250)
             love.graphics.print(leftTogo, 500, 250)
+            --AUTOWIN CONDITION LETS GOOO leftTogo = 0
             if leftTogo <= 0 then
                 day = "ending"
             end

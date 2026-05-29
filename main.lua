@@ -9,7 +9,7 @@ function love.load()
 end
 
 function love.update(dt)
-    Debug:update(dt)
+    -- Debug:update(dt)
     Game:update(dt)
   soundtrack()
 end
@@ -38,6 +38,6 @@ if location == "game" then
   Game:draw()
 end
 
-Debug:draw()
+-- Debug:draw()
 
 end

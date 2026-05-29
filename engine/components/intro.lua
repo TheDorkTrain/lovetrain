@@ -8,7 +8,6 @@ function Intro:draw()
         artSel:draw(73, 30, 301, 370)
         love.graphics.draw(artyImage, 23, -20, 0, 2, 2)
         
-    -- love.graphics.draw(charSelect)
     love.graphics.setFont(mediumF)
     love.graphics.setColor(1, 1, 1)
     love.graphics.print("Arty", 174, 404 )

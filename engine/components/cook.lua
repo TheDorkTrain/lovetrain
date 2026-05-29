@@ -6,6 +6,8 @@ cookingProduct = ''
 cookingPrice = 0
 cookingImage = ''
 
+local centerX = 325
+
 burnt = 0
 cookTime = 5
 heat = 5
@@ -22,19 +24,6 @@ function randomizeButton()
     currentButton = activeButton[math.random(#activeButton)]
     buttonTimer = 0
     nextButtonTime = math.random(3, 6)
-end
-
-function love.textinput(t)
-    if tonumber(t) or t == "." then
-        inputAmount = inputAmount .. t
-    end
-end
-function love.keypressed(key)
-    if key == "backspace" then
-        inputAmount = inputAmount:sub(1, -2)
-    elseif key == "return" then
-        finalNumber = tonumber(inputAmount) or 0
-    end
 end
 
 
@@ -148,7 +137,7 @@ function cook:draw(product, productTimer, marketPrice, image)
              love.graphics.setColor(.894, .627, .941)
             love.graphics.rectangle("fill", 300 + heat * 10, 300, 10, 20)
             love.graphics.setColor(0, 0, 0)
-            love.graphics.print("Press and hold:  " .. currentButton .. "  to increase the heat!", 200, 335)
+            love.graphics.print("Press and hold:  " .. currentButton .. "  to increase the heat!", 150, 335)
             love.graphics.setColor(1, 1, 1, 1)
         end
         
@@ -161,24 +150,35 @@ function cook:draw(product, productTimer, marketPrice, image)
             end
         end
         
-        if cookingFinished then
-            love.graphics.setColor(0, 0, 0)
-            if burnt >= 4 then
-                love.graphics.print('Oops, you made Trash', 200, 100)
-                love.graphics.print('Market Price: $0', 200, 150)
-                cookingCode = "Trash"
-                image = trashImage
-            else
-                love.graphics.print('Well done!', 200, 100)
-                love.graphics.print('You made ' .. product, 200, 150)
-                love.graphics.print('Market Price: $' .. marketPrice, 200, 200)
-            end
-            love.graphics.print("Enter your price (Press ENTER to confirm):", 75, 300)
-            love.graphics.print("Your price: $" .. inputAmount, 200, 330)
-            if priceConfirmed or finalNumber > 0 then
-                markButt:draw(200, 400, 325, 50, cookingCode, image, tonumber(inputAmount) or 0)
-            end
-        end
+    if cookingFinished then
+    love.graphics.setColor(0, 0, 0)
+    if burnt >= 4 then
+        love.graphics.print('Oops, you made Trash', centerX - smallF:getWidth('Oops, you made Trash')/2, 110)
+        love.graphics.print('Market Price: $0', centerX - smallF:getWidth('Market Price: $0')/2, 150)
+        cookingCode = "Trash"
+        image = trashImage
+        inputAmount = "0"
+        finalNumber = 0
+    else
+        love.graphics.print('Well done!', centerX - smallF:getWidth('Well done!')/2, 110)
+        love.graphics.print('You made ' .. product, centerX - smallF:getWidth('You made ' .. product)/2, 150)
+        love.graphics.print('Market Price: $' .. marketPrice, centerX - smallF:getWidth('Market Price: $' .. marketPrice)/2, 190)
+    end
+
+    -- draw price adjuster
+    local currentPrice = tonumber(inputAmount) or marketPrice
+    love.graphics.setFont(mediumF)
+    love.graphics.print('Your Price: $' .. currentPrice, centerX - mediumF:getWidth('Your Price: $' .. currentPrice)/2, 280)
+
+priceDownButt:draw(170, 320, 50, 40)
+priceUpButt:draw(430, 320, 50, 40)
+
+    love.graphics.setColor(1, 1, 1, 1)
+
+    if finalNumber > 0 then
+        markButt:draw(200, 390, 200, 100, cookingCode, image, currentPrice)
+    end
+end
     end
 end
     

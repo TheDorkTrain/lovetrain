@@ -4,7 +4,6 @@
     computerBack = love.graphics.newImage("assets/images/background/computerBack.png")
     kitchenBack = love.graphics.newImage("assets/images/background/kitchenBack.png")
     marketBack = love.graphics.newImage("assets/images/background/marketBack.png")
-    charSelect = love.graphics.newImage("assets/images/background/charSelect.png")
 
 --------------------------------Market -----------------------------
 stall1Image = love.graphics.newImage("assets/images/background/stall1.png")

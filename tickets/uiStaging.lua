@@ -20,6 +20,8 @@
     del4Butt = Button("delete", "x")
     bookButt = Button('delete', "x")
     creditsButt = Button('credits', "Credits")
+    priceUpButt = Button("priceUp", "+")
+priceDownButt = Button("priceDown", "-")
 ------------------------------- Credits ---------------------------------------------------
 
 -- oceanOffset = 0
@@ -96,6 +98,6 @@ function creditsdraw()
         love.graphics.setColor(1, 1, 1, 1)
         love.graphics.setFont(mediumF)
         love.graphics.print("Thanks for Playing!", 350, 250)
-        close:draw(350, 350, 200, 75)
+        close:draw(350, 350, 250, 50)
     end
 end
