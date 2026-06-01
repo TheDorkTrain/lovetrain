@@ -14,7 +14,7 @@ function market:draw()
     love.graphics.draw(marketBack)
     love.graphics.draw(cloudImage, weatherTime, 0) 
     love.graphics.draw(characterImage, 50, 375, 0, .75, .75)
-    love.graphics.draw(characterStall1, 10, 250, 0, 1, 1)
+    love.graphics.draw(characterStall, 10, 250, 0, 1, 1)
     
     if vendors then
         for _, vendor in ipairs(vendors) do

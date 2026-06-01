@@ -11,6 +11,7 @@ require "engine/components/item"
 require "engine/components/button"
 require "engine/components/shopItem"
 require "tickets/propStaging"
+scene = require "engine/components/scene"
 
 ------------------------------Object Staging----------------------------
 require "tickets/uiStaging"

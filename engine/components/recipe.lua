@@ -259,7 +259,7 @@ function recipe:draw()
         love.graphics.draw(sugarImage, 320, 330, 0, 1, 1)   
         love.graphics.draw(milkImage, 380, 330, 0, 1, 1)
         love.graphics.draw(butterImage, 440, 330, 0, 1, 1)
-        love.graphics.draw(banaImage, 500, 330, 0, 1, 1)
+        love.graphics.draw(banaImage, 500, 325, 0, 1, 1)
         
         if product1[1] ~= "" and product2[1] ~= "" and product3[1] ~= "" and product4[1] ~= "" then
              love.graphics.setColor(0, 0, 0)
@@ -395,7 +395,7 @@ function recipe:draw()
         love.graphics.draw(sugarImage, 320, 330, 0, 1, 1)   
         love.graphics.draw(milkImage, 380, 330, 0, 1, 1)
         love.graphics.draw(butterImage, 440, 330, 0, 1, 1)
-        love.graphics.draw(strawImage, 500, 330, 0, 1, 1)
+        love.graphics.draw(strawImage, 500, 325, 0, 1, 1)
         
         if product1[1] ~= "" and product2[1] ~= "" and product3[1] ~= "" and product4[1] ~= "" then
              love.graphics.setColor(0, 0, 0)

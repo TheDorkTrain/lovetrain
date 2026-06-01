@@ -42,9 +42,14 @@ function Button:draw(x, y, width, height, label, label2, label3)
     if self.name == 'prev' then
         love.graphics.polygon('fill', x, y-height/2, x, y+height+height/2, x-width/4, y+height/2)
     end
+    if self.name ~= 'next' and self.name ~= 'prev' then
+        love.graphics.setColor(0, 0, 0)
+        love.graphics.rectangle("fill", x-5, y-5, width+10, height+10)
+        love.graphics.setColor(.894, .627, .941)
+    end
     if self.name == 'delete' then
           love.graphics.setFont(tinyF)
-    elseif self.name == 'next' or self.name == 'prev' or self.name == 'readyMarket' then
+    elseif self.name == 'next' or self.name == 'prev' or self.name == 'readyMarket' or self.name == "market" or self.name == "task" then
           love.graphics.setFont(smallF)
     else
     love.graphics.setFont(mediumF)
@@ -72,12 +77,24 @@ function love.mousepressed(x, y, button)
              if pennySel:mousepressed(x, y, button) then
                  character = "Penny"
                  characterImage = love.graphics.newImage("assets/images/character/penny.png")
-                 characterStall1 = love.graphics.newImage("assets/images/background/stallPenny1.png")
+                 characterStall = love.graphics.newImage("assets/images/background/stallPenny.png")
+                 characterNeutral = love.graphics.newImage("assets/images/character/emotions/penny.png")
+                 characterAnnoy = love.graphics.newImage("assets/images/character/emotions/pennyAnnoy.png")
+                 characterMad = love.graphics.newImage("assets/images/character/emotions/pennyMad.png")
+                 characterHappy = love.graphics.newImage("assets/images/character/emotions/pennyHappy.png")
+                 characterShy = love.graphics.newImage("assets/images/character/emotions/pennyShy.png")
+                 sisterImage = love.graphics.newImage("assets/images/character/arty.png")
              end
              if artSel:mousepressed(x, y, button) then
                  character = "Arty"
-                 characterImage = love.graphics.newImage("assets/images/character/penny.png")
-                 characterStall1 = love.graphics.newImage("assets/images/background/stallPenny1.png")
+                 characterImage = love.graphics.newImage("assets/images/character/arty.png")
+                 characterStall = love.graphics.newImage("assets/images/background/stallArty.png")
+                 characterNeutral = love.graphics.newImage("assets/images/character/emotions/arty.png")
+                 characterAnnoy = love.graphics.newImage("assets/images/character/emotions/artyAnnoy.png")
+                 characterMad = love.graphics.newImage("assets/images/character/emotions/artyMad.png")
+                 characterHappy = love.graphics.newImage("assets/images/character/emotions/artyHappy.png")
+                 characterShy = love.graphics.newImage("assets/images/character/emotions/artyShy.png")
+                 sisterImage = love.graphics.newImage("assets/images/character/penny.png")
              end
          end
     end
@@ -91,7 +108,10 @@ function love.mousepressed(x, y, button)
     
     if day == "WeekReview" or day == "ReadyforMarket" then
         if endWeekButt:mousepressed(x, y, button) then
+            activeEvent = ''
+            newWeekInitialized = false
             weekReviewSongPlayed = false
+              resolutionTriggered = false
             timer = 1
             week = week + 1
             day = "NewWeek"
@@ -178,13 +198,13 @@ end
             finalNumber = newPrice
         end
     end
-    if priceDownButt:mousepressed(x, y, button) then
-        local newPrice = currentPrice - 1
-        if newPrice >= cookingPrice - 10 then
-            inputAmount = tostring(newPrice)
-            finalNumber = newPrice
-        end
+   if priceDownButt:mousepressed(x, y, button) then
+    local newPrice = currentPrice - 1
+    if newPrice >= 1 then  -- never go below 1 for anything
+        inputAmount = tostring(newPrice)
+        finalNumber = newPrice
     end
+end
 end
     end
 
@@ -193,20 +213,51 @@ end
             if product1[1] == "" and product2[1] == "" and product3[1] == "" and product4[1] == "" then
                 noProductsMessage = true
                 noProductsTimer = 0
+            elseif activeEvent == 'rainyDay' then
+                timer = 1
+                day = "WeekReview"
             else
                 timer = 1
                 day = "Sunday"
             end
         end
     end
+
+    if day == "EventScene" then
+    if nextDialogButt:mousepressed(x, y, button) then
+        advanceDialog()
+    end
+    if scenePhase == 'intro' and dialogFinished then
+        if acceptButt:mousepressed(x, y, button) then
+            if activeEvent == 'darwinLoan' then
+                loanActive = true    
+                loanWeeksLeft = 6 
+                funds = funds + 100
+            end
+            day = "NewWeek"  -- continue with event active
+        end
+        if declineButt:mousepressed(x, y, button) then
+            activeEvent = ''
+            day = "NewWeek"
+        end
+        if closeSceneButt:mousepressed(x, y, button) then
+            day = "NewWeek"
+        end
+    end
+    if scenePhase == 'resolution' and dialogFinished then
+        if closeSceneButt:mousepressed(x, y, button) then
+            resolutionTriggered = false
+            activeEvent = ''
+            day = "WeekReview"
+            newWeekInitialized = false
+        end
+    end
+end
     
 --  =======================================================================  
     if location == "menu" then
         if start:mousepressed(x, y, button) then
             location = "intro"
-        end
-        if close:mousepressed(x, y, button) then
-            love.event.quit()
         end
     end
     if location == "intro" then
@@ -224,18 +275,13 @@ end
     end
    if day == "ending" then
     if creditsButt:mousepressed(x, y, button) then
+          buildCredits() 
     showCredits = true
     creditsOffset = 600
     creditsImageIndex = 1
     creditsImageAlpha = 0
     creditsImageTimer = 0
     creditsImageFadeIn = true
-    end
-end
-
-if day == "ending" and creditsFinished then
-    if closeButt:mousepressed(x, y, button) then
-        love.event.quit()
     end
 end
 
@@ -262,7 +308,7 @@ end
                 cookingProduct = 'Sugar Cookies'
                 cookingCode = 'cookSugar'
                 cookingTime = 10
-                cookingPrice = 5
+                cookingPrice = 10
                 cookingImage = cooksugarImage
                 cookingStarted = false
                 cookingFinished = false
@@ -281,7 +327,7 @@ end
                 cookingProduct = 'Chocolate Cookies'
                 cookingCode = 'cookChoc'
                 cookingTime = 10
-                cookingPrice = 5
+                cookingPrice = 13
                 cookingImage = cookchocImage
                 cookingStarted = false
                 cookingFinished = false
@@ -300,7 +346,7 @@ end
                 cookingProduct = 'Raisin Cookies'
                 cookingCode = 'cookRaisin'
                 cookingTime = 10
-                cookingPrice = 5
+                cookingPrice = 20
                 cookingImage = cookraisinImage
                 cookingStarted = false
                 cookingFinished = false
@@ -317,8 +363,8 @@ end
                 itemMilk = itemMilk - 2
                 cookingProduct = 'Bread'
                 cookingCode = 'bread'
-                cookingTime = 10
-                cookingPrice = 5
+                cookingTime = 20
+                cookingPrice = 14
                 cookingImage = breadImage
                 cookingStarted = false
                 cookingFinished = false
@@ -336,8 +382,8 @@ end
                 itemChoc = itemChoc - 1
                 cookingProduct = 'Chocolate Bread'
                 cookingCode = 'breadChoc'
-                cookingTime = 10
-                cookingPrice = 5
+                cookingTime = 20
+                cookingPrice = 17
                 cookingImage = breadchocImage
                 cookingStarted = false
                 cookingFinished = false
@@ -355,8 +401,8 @@ end
                 itemBanana = itemBanana - 1
                 cookingProduct = 'Banana Bread'
                 cookingCode = 'breadBana'
-                cookingTime = 10
-                cookingPrice = 5
+                cookingTime = 20
+                cookingPrice = 22
                 cookingImage = breadbanaImage
                 cookingStarted = false
                 cookingFinished = false
@@ -373,8 +419,8 @@ end
                 itemMilk = itemMilk - 2
                 cookingProduct = 'Cake'
                 cookingCode = 'cake'
-                cookingTime = 10
-                cookingPrice = 5
+                cookingTime = 30
+                cookingPrice = 19
                 cookingImage = cakeImage
                 cookingStarted = false
                 cookingFinished = false
@@ -392,8 +438,8 @@ end
                 itemChoc = itemChoc - 2
                 cookingProduct = 'Chocolate Cake'
                 cookingCode = 'cakeChoc'
-                cookingTime = 10
-                cookingPrice = 5
+                cookingTime = 30
+                cookingPrice = 25
                 cookingImage = cakechocImage
                 cookingStarted = false
                 cookingFinished = false
@@ -411,8 +457,8 @@ end
                 itemStraw = itemStraw - 2
                 cookingProduct = 'Strawberry Cake'
                 cookingCode = 'cakeStraw'
-                cookingTime = 10
-                cookingPrice = 5
+                cookingTime = 30
+                cookingPrice = 34
                 cookingImage = cakestrawImage
                 cookingStarted = false
                 cookingFinished = false
@@ -421,6 +467,18 @@ end
                 finalNumber = 0
                 cookgame = "on"
         end
+         if taskButt:mousepressed(x, y, button) and cookingFinished and finalNumber > 0 then
+    if productCountsForTask(cookingCode) then
+        taskProgress = taskProgress + 1
+    end
+    cookgame = "off"
+    cookingStarted = false
+    cookingFinished = false
+    priceConfirmed = false
+    inputAmount = ""
+    finalNumber = 0
+    recipeShow = "off"
+end
         if markButt:mousepressed(x, y, button) and cookingFinished and (priceConfirmed or finalNumber > 0) then
             addProduct(markButt.label, markButt.label2, markButt.label3)
         end

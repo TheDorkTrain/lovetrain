@@ -4,7 +4,7 @@ function pantry:draw()
     -- Market Items
     if pov == "kitchen" then
     love.graphics.setColor(0, 0, 0)
-    love.graphics.rectangle("fill", 595, 0, 205, 260)
+    love.graphics.rectangle("fill", 595, 0, 215, 260)
       love.graphics.setColor(0.702, 0.98, 0.902)
       love.graphics.rectangle("fill", 600, 5, 200, 250)
         love.graphics.setColor(0, 0, 0)

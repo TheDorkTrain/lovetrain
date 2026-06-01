@@ -1,5 +1,9 @@
 require ("tickets/allAboard")
- location = "menu"
+ location = "logo"
+
+ logoTimer = 0
+logoFadeAlpha = 0
+logoFading = false
 
 function love.load()
  Object = require "engine/components/classic"
@@ -12,10 +16,31 @@ function love.update(dt)
     -- Debug:update(dt)
     Game:update(dt)
   soundtrack()
+
+  if location == "logo" then
+    logoTimer = logoTimer + dt
+    if logoTimer < 1 then
+        logoFadeAlpha = logoTimer
+    elseif logoTimer < 2 then
+        logoFadeAlpha = 1 
+    elseif logoTimer < 3 then
+        logoFadeAlpha = 3 - logoTimer 
+    else
+        location = "menu"  
+end
+end
+
 end
 
 
 function love.draw()
+
+  if location == "logo" then
+    love.graphics.setColor(0, 0, 0)
+    love.graphics.rectangle("fill", 0, 0, love.graphics.getWidth(), love.graphics.getHeight())
+    love.graphics.setColor(1, 1, 1, logoFadeAlpha)
+    love.graphics.draw(dorkTrainLogo, 150, 50, 0, .25, .25)
+end
 
 
     if location == "ending" then

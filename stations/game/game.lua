@@ -10,6 +10,7 @@ sundayDebug = "no"
 _G.purchaseLogEntries = {}
 noProductsMessage = false
 noProductsTimer = 0
+newWeekInitialized = false
 
 function Game:load()
     animations() 
@@ -19,15 +20,40 @@ function Game:update(dt)
     if location == "game" and day == "NewWeek" then
         budgetAnimTimer = 0
         productsSoldThisWeek = {}
-        -- product1 = {"", "", 0}
-        -- product2 = {"", "", 0}
-        -- product3 = {"", "", 0}
-        -- product4 = {"", "", 0}
+        product1 = {"", "", 0}
+        product2 = {"", "", 0}
+        product3 = {"", "", 0}
+        product4 = {"", "", 0}
         -- product5 = {"", "", 0}
         -- product6 = {"", "", 0}
         -- product7 = {"", "", 0}
         -- product8 = {"", "", 0}
+    -- random chance of event
+     if not newWeekInitialized then
+        newWeekInitialized = true
+        budgetAnimTimer = 0
+        productsSoldThisWeek = {}
+        if love.math.random(1, 3) == 1 and activeEvent == '' then
+             if  activeEvent == '' then
+            local roll = love.math.random(1, #eventList)
+                 if week > 1 then
+                    -- startEvent(eventList[roll])
+            startEvent(eventList[roll])
+            scenePhase = 'intro'
+            day = "EventScene"
+                 end
+                end
+        end
     end
+    end
+if location == 'game' and day == 'WeekReview' then
+    if activeEvent ~= '' and not resolutionTriggered then
+        resolutionTriggered = true
+        scenePhase = 'resolution'
+        resolveEvent()
+        day = "EventScene"
+    end
+end
     if location == "game" and day == "Weekday" then
         runAnimation(dt) 
     end
@@ -71,6 +97,7 @@ function Game:update(dt)
         weather(dt)
         customerUpdate(dt)
     end
+
 if day == "ending" and showCredits then
     creditsOffset = creditsOffset - 40 * dt
     
@@ -111,11 +138,16 @@ function Game:draw()
             love.graphics.print(funds, 400, 200)
             love.graphics.print("Left To Go:", 250, 250)
             love.graphics.print(leftTogo, 500, 250)
-            --AUTOWIN CONDITION LETS GOOO leftTogo = 0
+            --AUTOWIN CONDITION LETS GOOO 
+            -- leftTogo = 0
             if leftTogo <= 0 then
                 day = "ending"
             end
     end
+
+    if day == "EventScene" then
+    scene:draw()
+end
 
     if day == "Weekday" then
     love.graphics.draw(workBack)
@@ -145,6 +177,8 @@ function Game:draw()
             love.graphics.draw(kitchenBack)
             computerButt:draw(25, 555, 100, 25)
              dayTimer:draw()
+             love.graphics.setColor(0, 0, 0 )
+             love.graphics.rectangle('fill',345, 345, 135, 60)
              cookButt:draw(350, 350, 125, 50, 'recipe')
              recipe:draw()
               if cookgame == "on" then
@@ -179,6 +213,9 @@ end
 
     if day == "WeekReview" then
         love.graphics.print("Week Review", 225, 150)
+        if activeEvent == "rainyDay" then
+            love.graphics.print("Market Closed due to rain.", 225, 240)
+        else
         love.graphics.print("Goods Sold:", 225, 240)
         
         -- Display weekly summary
@@ -186,15 +223,21 @@ end
         local yOffset = 280
         if productsSoldThisWeek and next(productsSoldThisWeek) then
             for productName, data in pairs(productsSoldThisWeek) do
-                local profit = data.revenue - (data.cost * data.count)
-                local prettyName = getPrettyProductName(productName)
-                love.graphics.print(prettyName .. ": x" .. data.count .. " | Cost: $" .. (data.cost * data.count) .. " | Revenue: $" .. data.revenue .. " | Profit: $" .. profit, 150, yOffset)
-                yOffset = yOffset + 25
-            end
+    local profit = data.revenue - (data.cost * data.count)
+    local prettyName = getPrettyProductName(productName)
+    
+    -- Trash cost is unknown
+    if productName == "Trash" then
+        love.graphics.print(prettyName .. ": x" .. data.count .. " | Cost: ??? | Revenue: $" .. data.revenue .. " | Profit: ???", 150, yOffset)
+    else
+        love.graphics.print(prettyName .. ": x" .. data.count .. " | Cost: $" .. (data.cost * data.count) .. " | Revenue: $" .. data.revenue .. " | Profit: $" .. profit, 150, yOffset)
+    end
+    yOffset = yOffset + 25
+end
         else
             love.graphics.print("No products sold this week", 225, yOffset)
         end
-        
+    end
         love.graphics.setFont(mediumF)
         endWeekButt:draw(200, 475, 350, 50)
     end

@@ -2,10 +2,20 @@ customer = Object:extend()
 
 customers = {}
 interestList = {"all", "cookies", "bread", "cake", 'trash'}
-art = {banaImage, breadImage}
 currentCustomerIndex = 1
 customerPurchaseTimer = 0
 customerPurchaseInterval = 3
+hasSoldTrash = false
+
+local regularImages = nil
+
+local function getCustomerImages()
+    if not regularImages then
+        regularImages = {cust1Image, cust2Image, cust3Image, cust4Image, cust5Image, cust6Image}
+    end
+    return regularImages
+end
+
 
 local productNames = {
     cookSugar = "Sugar Cookie",
@@ -26,13 +36,34 @@ end
 
 function customersGet(n)
     _G.purchaseLogEntries = {}  -- Initialize log
-    for i = 1, n, 1 do
-        if product1[1] == 'Trash' or product2[1] == 'Trash' or product3[1] == 'Trash' or product4[1] == 'Trash' or product5[1] == "Trash" or product6[1] == 'Trash' or product7[1] == 'Trash' or product8[1] == 'Trash' then
-            randInterest = love.math.random(1,5)
+     local hasTrash = product1[1]=='Trash' or product2[1]=='Trash' or product3[1]=='Trash' or product4[1]=='Trash' or
+                     product5[1]=="Trash" or product6[1]=='Trash' or product7[1]=='Trash' or product8[1]=='Trash'
+
+    for i = 1, n do
+        local randInterest
+        local img
+        if hasTrash and love.math.random(1, 10) == 1 then
+            randInterest = love.math.random(1, 5)
+              img = blobImage
+            if hasSoldTrash == false then
+                table.insert(eventList, 'blobDinnerParty')
+                hasSoldTrash = true
+            end
         else
-            randInterest = love.math.random(1,4)
+            randInterest = love.math.random(1, 4)
+             local imgs = getCustomerImages()
+            img = imgs[love.math.random(#imgs)]
         end
-        newCustomer = customer(interestList[randInterest])
+
+        -- random start side
+        local screenWidth = 800
+        local startRight = love.math.random(1, 2) == 1
+        local startX = startRight and screenWidth + 20 or -80
+        local speed = love.math.random(10, 30)
+        local dir = startRight and -1 or 1
+        local yPos = 450
+
+        newCustomer = customer(interestList[randInterest], img, startX, yPos, speed, dir)
         table.insert(customers, newCustomer)
     end
     currentCustomerIndex = 1
@@ -40,15 +71,19 @@ function customersGet(n)
 end
 
 
+
 function customerUpdate(dt)
     if #customers == 0 then return end
-    
+
+    -- move all customers
+    for _, cust in ipairs(customers) do
+        cust.x = cust.x + cust.speed * cust.dir * dt
+    end
+
     customerPurchaseTimer = customerPurchaseTimer + dt
     if customerPurchaseTimer >= customerPurchaseInterval then
         if currentCustomerIndex <= #customers then
-            print("\n========== PURCHASE ATTEMPT #" .. currentCustomerIndex .. " ==========")
             customers[currentCustomerIndex]:makePurchase()
-            print("========== END ATTEMPT #" .. currentCustomerIndex .. " ==========\n")
             currentCustomerIndex = currentCustomerIndex + 1
         end
         customerPurchaseTimer = 0
@@ -230,11 +265,22 @@ function customer:makePurchase()
     end
 end
 
-function customer:new(interest)
+function customer:new(interest, img, startX, yPos, speed, dir)
     self.interest = interest
+    self.img = img
+    self.x = startX
+    self.y = yPos
+    self.speed = speed
+    self.dir = dir
 end
 
 function customer:draw()
     love.graphics.setColor(1, 1, 1, 1)
+    if self.img then
+        -- flip sprite based on direction
+        local scaleX = self.dir == 1 and 0.75 or -0.75
+        local offsetX = self.dir == 1 and 0 or 60  -- offset when flipped so it doesn't draw behind itself
+        love.graphics.draw(self.img, self.x + offsetX, self.y, 0, scaleX, 0.75)
+    end
 end
 

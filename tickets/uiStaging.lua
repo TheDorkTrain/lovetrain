@@ -22,10 +22,13 @@
     creditsButt = Button('credits', "Credits")
     priceUpButt = Button("priceUp", "+")
 priceDownButt = Button("priceDown", "-")
+nextDialogButt = Button("next", "")
+acceptButt = Button("accept", "Accept")
+declineButt = Button("decline", "Decline")
+closeSceneButt = Button("close", "Close")
+taskButt = Button("task", "Add to Task")
 ------------------------------- Credits ---------------------------------------------------
 
--- oceanOffset = 0
--- oceanSpeed = 50 
 showCredits = false
 creditsOffset = love.graphics.getHeight() 
 creditsSpeed = 20
@@ -38,10 +41,20 @@ creditsImageDuration = 2
 creditsFadeSpeed = 0.25 
 creditsFinished = false
 
+ function buildCredits()
 credits = {
     "",
-    "Dough",
-    "for Dreams",
+       {image = titleImage, scale = 0.5}, 
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
     "",
     "Programmed by Bryce McWhirter",
     "",
@@ -52,24 +65,36 @@ credits = {
      "",
      "Tracks Include: ",
     "Autumn Leaves",
-    "Blithe",
     "Closed Bakery",
     "Good Old Days",
-    "My Only Love",
     "Till Death Do Us Part",
+    "",
+    "",
     "",
     "Special Thanks:",
     "Penny McWhirter",
     "Arty McWhirter",
     "",
+    "",
+    "",
+    "",
+    "",
     "Built with LÖVE2D",
     "",
+    "",
+    "",
+    {image = dorkTrainLogo, scale = 0.15}, 
+        "",
+        "",
+        "",
+        "",
 }
+end
 
 
 function creditsdraw() 
 
-    imageScroll= {cooksugarImage, breadImage, cakeImage, cookchocImage, breadchocImage, cakechocImage, cookraisinImage, breadbanaImage, cake }
+    imageScroll= {cooksugarImage, breadImage, cakeImage, cookchocImage, breadchocImage, cakechocImage, cookraisinImage, breadbanaImage, cakestrawImage }
 
     if imageScroll and imageScroll[creditsImageIndex] then
         love.graphics.setColor(1, 1, 1, creditsImageAlpha)
@@ -77,27 +102,34 @@ function creditsdraw()
     end
 
     if not creditsFinished then
+          local x = 375
         -- scrolling credits text
         love.graphics.setColor(1, 1, 1, 1)
-        for i, line in ipairs(credits) do
-            local y = creditsOffset + (i - 1) * 40
-            if y > -30 and y < love.graphics.getHeight() + 30 then
-                local x = 375
-                love.graphics.setFont(debugF)
-                if line == "GAME TITLE" or (line ~= "" and i <= 3) then
-                     love.graphics.setFont(largeF)
-                    love.graphics.print(line, x, y, 0) 
-                    love.graphics.setFont(mediumF)
-                else
-                    love.graphics.print(line, x, y)
-                end
-            end
+      
+for i, line in ipairs(credits) do
+    local y = creditsOffset + (i - 1) * 40
+    
+    if type(line) == "table" and line.image then
+        local scale = line.scale or 1
+        local imgHeight = line.image:getHeight() * scale
+        if y > -imgHeight and y < love.graphics.getHeight() + imgHeight then
+            love.graphics.setColor(1, 1, 1, 1)
+            love.graphics.draw(line.image, x, y, 0, scale, scale)
         end
+    elseif type(line) == "string" then
+        if y > -30 and y < love.graphics.getHeight() + 30 then
+            love.graphics.setColor(1, 1, 1, 1)
+            love.graphics.setFont(smallF)
+            love.graphics.print(line, x, y)
+        end
+    end
+end
+
+
     else
         -- end screen
         love.graphics.setColor(1, 1, 1, 1)
         love.graphics.setFont(mediumF)
         love.graphics.print("Thanks for Playing!", 350, 250)
-        close:draw(350, 350, 250, 50)
     end
 end

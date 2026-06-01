@@ -10,18 +10,32 @@ stall1Image = love.graphics.newImage("assets/images/background/stall1.png")
 stall2Image = love.graphics.newImage("assets/images/background/stall2.png")
 stall3Image = love.graphics.newImage("assets/images/background/stall3.png")
 stallDarwinImage = love.graphics.newImage("assets/images/background/stallDarwin.png")
-stallPenny1Image = love.graphics.newImage("assets/images/background/stallPenny1.png")
+
+stallupgrade1Image = love.graphics.newImage("assets/images/background/crate1.png")
+stallupgrade2Image = love.graphics.newImage("assets/images/background/crate2.png")
 
 artyImage = love.graphics.newImage("assets/images/character/arty.png")
 pennyImage = love.graphics.newImage("assets/images/character/penny.png")
 
-vendor1Image = love.graphics.newImage("assets/images/character/arty.png")
-vendor2Image = love.graphics.newImage("assets/images/character/arty.png")
-vendor3Image = love.graphics.newImage("assets/images/character/arty.png")
-vendor4Image = love.graphics.newImage("assets/images/character/arty.png")
-darwinImage = love.graphics.newImage("assets/images/character/penny.png")
+vendor1Image = love.graphics.newImage("assets/images/character/vendor1.png")
+vendor2Image = love.graphics.newImage("assets/images/character/vendor2.png")
+vendor3Image = love.graphics.newImage("assets/images/character/vendor3.png")
+vendor4Image = love.graphics.newImage("assets/images/character/vendor4.png")
+darwinImage = love.graphics.newImage("assets/images/character/darwin.png")
 
---------------------------------Character-------------------------------
+cust1Image = love.graphics.newImage("assets/images/character/cust1.png")
+cust2Image = love.graphics.newImage("assets/images/character/cust2.png")
+cust3Image = love.graphics.newImage("assets/images/character/cust3.png")
+cust4Image = love.graphics.newImage("assets/images/character/cust4.png")
+cust5Image = love.graphics.newImage("assets/images/character/cust5.png")
+cust6Image = love.graphics.newImage("assets/images/character/cust6.png") 
+blobImage = love.graphics.newImage("assets/images/character/blob.png")
+
+shieldImage = love.graphics.newImage("assets/images/character/shield.png")
+fireImage = love.graphics.newImage("assets/images/character/fire.png")
+
+--------------------------------Characters-------------------------------
+
 
 ---------------------------------Effects--------------------------------
 cloudImage = love.graphics.newImage("assets/images/background/cloud.png")
@@ -49,4 +63,6 @@ cloudImage = love.graphics.newImage("assets/images/background/cloud.png")
     cakechocImage = love.graphics.newImage("assets/images/props/cakechoc.png")
     cakestrawImage = love.graphics.newImage("assets/images/props/cakestraw.png")
     cakemomImage = love.graphics.newImage("assets/images/props/cakemom.png")
-----------------------------------UI------------------------------------
+    ----------------------------------UI------------------------------------
+    titleImage = love.graphics.newImage("assets/images/ui/Title.png")
+    dorkTrainLogo = love.graphics.newImage("assets/images/ui/dorkTrainLogo.png")

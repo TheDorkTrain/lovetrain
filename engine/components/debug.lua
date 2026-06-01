@@ -1,7 +1,7 @@
 local Debug ={}
 
 function Debug:update(dt)
-if love.keyboard.isDown("p") then
+if love.keyboard.isDown("1") then
       mouseX = love.mouse.getX()
       mouseY = love.mouse.getY()
       showMouse = true
@@ -20,13 +20,15 @@ if showMouse == true then
       love.graphics.print("Mouse X: " .. mouseX, 20, 25)
       love.graphics.print("Mouse Y: " .. mouseY, 20, 50)
       love.graphics.print("Burnt " .. burnt, 20, 75)
+      love.graphics.print("Heat " .. heat, 20, 100)
+       love.graphics.print("MinHeat " .. minHeat, 20, 125)
 
-      love.graphics.setColor(1, 1, 0)
-love.graphics.setFont(smallF)
-love.graphics.print("P1: " .. tostring(product1[1]) .. " / " .. tostring(product1[3]), 20, 300)
-love.graphics.print("P2: " .. tostring(product2[1]) .. " / " .. tostring(product2[3]), 20, 320)
-love.graphics.print("P3: " .. tostring(product3[1]) .. " / " .. tostring(product3[3]), 20, 340)
-love.graphics.print("P4: " .. tostring(product4[1]) .. " / " .. tostring(product4[3]), 20, 360)
+--       love.graphics.setColor(1, 1, 0)
+-- love.graphics.setFont(smallF)
+-- love.graphics.print("P1: " .. tostring(product1[1]) .. " / " .. tostring(product1[3]), 20, 300)
+-- love.graphics.print("P2: " .. tostring(product2[1]) .. " / " .. tostring(product2[3]), 20, 320)
+-- love.graphics.print("P3: " .. tostring(product3[1]) .. " / " .. tostring(product3[3]), 20, 340)
+-- love.graphics.print("P4: " .. tostring(product4[1]) .. " / " .. tostring(product4[3]), 20, 360)
 
 
       -- love.graphics.print("Recipe " .. recipeShow, 20, 75)

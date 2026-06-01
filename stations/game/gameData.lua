@@ -53,7 +53,7 @@ momsRecipe = false
 -----------------------------------States----------------------------
 character = "none"
 characterImage = "none"
-characterStall1 = "none"
-characterStall2 = "none"
-characterStall3= "none"
+characterStall = "none"
+sisterImage = "none"
+
 
