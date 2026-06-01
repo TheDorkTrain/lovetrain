@@ -75,7 +75,6 @@ end
 function customerUpdate(dt)
     if #customers == 0 then return end
 
-    -- move all customers
     for _, cust in ipairs(customers) do
         cust.x = cust.x + cust.speed * cust.dir * dt
     end
@@ -106,7 +105,7 @@ function shouldCustomerBuyProduct(interest, productName)
 end
 
 function findAvailableProduct(interest)
-    -- Check player's available products
+
     local availableProducts = {product1, product2, product3, product4, product5, product6, product7, product8}
     
     for _, product in ipairs(availableProducts) do
@@ -118,7 +117,6 @@ function findAvailableProduct(interest)
 end
 
 function getVendorPrice(productName)
-    -- Returns the lowest vendor price for a product, or nil if no vendor has it
     if not vendors then return nil end
     
     local lowestPrice = nil

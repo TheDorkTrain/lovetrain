@@ -17,7 +17,7 @@ function weeklyBudget:update(dt)
         local randExpenseList = {"Ate Out", "Coffee", "Shopping", "Parking", "New Game", "Movies"}
         randomCost = love.math.random(1, 10)
         randomExpense = randExpenseList[currentExpense] .. " -" .. randomCost
-        funds = funds + 10 - randomCost
+        funds = funds + 20 - randomCost
 
         if loanActive and loanWeeksLeft > 0 and not loanDeducted then
             funds = funds - 25
@@ -29,11 +29,7 @@ function weeklyBudget:update(dt)
         end
 
         leftTogo = 500 - funds
-    elseif prevDay == "Weekday" and day ~= "Weekday" then
-        randomExpense = ""
-        loanDeducted = false 
     end
-    prevDay = day
 end
 
 function weeklyBudget:draw(animTimer)

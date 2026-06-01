@@ -25,8 +25,8 @@ priceConfirmed = false
 inputAmount = ""
 finalNumber = 0
 activeButton = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'}
--- For Gabs to play on Steam Deck
--- activeButton = {'A', 'B', 'X', 'Y'}
+-- For Gabs and girls to play on Steam Deck
+-- activeButton = {'a', 'b', 'x', 'y'}
 buttonTimer = 0
 nextButtonTime = math.random(3, 6)
 currentButton = activeButton[math.random(#activeButton)]
@@ -82,47 +82,22 @@ function cookTimer(dt)
 end
 
 function addProduct(productCode, image, price)
-    
-     if product1[1] ~= "" and product2[1] ~= "" and product3[1] ~= "" and product4[1] == "" then
-        product4 = {productCode, image, price}
-        cookgame = "off"
-        cookingStarted = false
-        cookingFinished = false
-        priceConfirmed = false
-        inputAmount = ""
-        finalNumber = 0
-        recipeShow = "off" 
-    end
-    if product1[1] ~= "" and product2[1] ~= "" and product3[1] == "" then
-        product3 = {productCode, image, price}
-         cookgame = "off"
-         cookingStarted = false
-         cookingFinished = false
-         priceConfirmed = false
-         inputAmount = ""
-         finalNumber = 0
-         recipeShow = "off" 
-    end
-    if product1[1] ~= "" and product2[1] == "" then
-        product2 = {productCode, image, price}
-       cookgame = "off"
-       cookingStarted = false
-       cookingFinished = false
-       priceConfirmed = false
-       inputAmount = ""
-       finalNumber = 0
-       recipeShow = "off" 
-    end
     if product1[1] == "" then
         product1 = {productCode, image, price}
-      cookgame = "off"
-      cookingStarted = false
-      cookingFinished = false
-      priceConfirmed = false
-      inputAmount = ""
-      finalNumber = 0
-      recipeShow = "off"  
+    elseif product2[1] == "" then
+        product2 = {productCode, image, price}
+    elseif product3[1] == "" then
+        product3 = {productCode, image, price}
+    elseif product4[1] == "" then
+        product4 = {productCode, image, price}
     end
+    cookgame = "off"
+    cookingStarted = false
+    cookingFinished = false
+    priceConfirmed = false
+    inputAmount = ""
+    finalNumber = 0
+    recipeShow = "off"
 end
 
 function cook:draw(product, productTimer, marketPrice, image)

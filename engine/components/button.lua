@@ -307,7 +307,7 @@ end
                 itemMilk = itemMilk - 1
                 cookingProduct = 'Sugar Cookies'
                 cookingCode = 'cookSugar'
-                cookingTime = 10
+                cookingTime = 5
                 cookingPrice = 10
                 cookingImage = cooksugarImage
                 cookingStarted = false
@@ -326,7 +326,7 @@ end
                 itemChoc = itemChoc - 1
                 cookingProduct = 'Chocolate Cookies'
                 cookingCode = 'cookChoc'
-                cookingTime = 10
+                cookingTime = 5
                 cookingPrice = 13
                 cookingImage = cookchocImage
                 cookingStarted = false
@@ -345,7 +345,7 @@ end
                 itemRaisin = itemRaisin - 1
                 cookingProduct = 'Raisin Cookies'
                 cookingCode = 'cookRaisin'
-                cookingTime = 10
+                cookingTime = 5
                 cookingPrice = 20
                 cookingImage = cookraisinImage
                 cookingStarted = false
@@ -363,7 +363,7 @@ end
                 itemMilk = itemMilk - 2
                 cookingProduct = 'Bread'
                 cookingCode = 'bread'
-                cookingTime = 20
+                cookingTime = 15
                 cookingPrice = 14
                 cookingImage = breadImage
                 cookingStarted = false
@@ -382,7 +382,7 @@ end
                 itemChoc = itemChoc - 1
                 cookingProduct = 'Chocolate Bread'
                 cookingCode = 'breadChoc'
-                cookingTime = 20
+                cookingTime = 15
                 cookingPrice = 17
                 cookingImage = breadchocImage
                 cookingStarted = false
@@ -401,7 +401,7 @@ end
                 itemBanana = itemBanana - 1
                 cookingProduct = 'Banana Bread'
                 cookingCode = 'breadBana'
-                cookingTime = 20
+                cookingTime = 15
                 cookingPrice = 22
                 cookingImage = breadbanaImage
                 cookingStarted = false
@@ -419,7 +419,7 @@ end
                 itemMilk = itemMilk - 2
                 cookingProduct = 'Cake'
                 cookingCode = 'cake'
-                cookingTime = 30
+                cookingTime = 20
                 cookingPrice = 19
                 cookingImage = cakeImage
                 cookingStarted = false
@@ -438,7 +438,7 @@ end
                 itemChoc = itemChoc - 2
                 cookingProduct = 'Chocolate Cake'
                 cookingCode = 'cakeChoc'
-                cookingTime = 30
+                cookingTime = 20
                 cookingPrice = 25
                 cookingImage = cakechocImage
                 cookingStarted = false
@@ -457,7 +457,7 @@ end
                 itemStraw = itemStraw - 2
                 cookingProduct = 'Strawberry Cake'
                 cookingCode = 'cakeStraw'
-                cookingTime = 30
+                cookingTime = 20
                 cookingPrice = 34
                 cookingImage = cakestrawImage
                 cookingStarted = false

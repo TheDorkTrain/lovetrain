@@ -32,6 +32,8 @@ function Game:update(dt)
      if not newWeekInitialized then
         newWeekInitialized = true
         budgetAnimTimer = 0
+         randomExpense = ""
+         loanDeducted = false 
         productsSoldThisWeek = {}
         if love.math.random(1, 3) == 1 and activeEvent == '' then
              if  activeEvent == '' then
